@@ -145,33 +145,12 @@ export default function Hero() {
       <AnimatePresence>
         {unlocked ? (
           <motion.div
-            className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/75 px-4 py-6 backdrop-blur-xl sm:px-5"
+            className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/85 px-4 py-6 backdrop-blur-md sm:px-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeUnlock}
           >
-            <motion.div
-              className="absolute inset-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.55 }}
-            >
-              <SideRays
-                speed={2.5}
-                rayColor1="#EAB308"
-                rayColor2="#96c8ff"
-                intensity={2}
-                spread={2}
-                origin="top-right"
-                tilt={0}
-                saturation={1.5}
-                blend={0.75}
-                falloff={1.6}
-                opacity={0.75}
-              />
-            </motion.div>
             <motion.div
               className="relative w-full max-w-4xl overflow-hidden rounded-[1.5rem] border border-cyan-300/20 bg-[#101624] shadow-glass sm:rounded-[1.75rem]"
               initial={{ opacity: 0, scale: 0.72, rotateX: 18, y: 80 }}

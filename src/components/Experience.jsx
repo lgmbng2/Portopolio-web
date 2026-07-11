@@ -24,7 +24,7 @@ export default function Experience() {
             <MotionSpotlightCard
               as="article"
               key={experience.title}
-              className="rounded-[1.5rem] border border-white/10 bg-white/[0.05] p-5 shadow-glass sm:rounded-[2rem] sm:p-6"
+              className="w-full max-w-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.05] p-5 shadow-glass sm:rounded-[2rem] sm:p-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
@@ -36,9 +36,9 @@ export default function Experience() {
                     {experience.company.slice(0, 2).toUpperCase()}
                   </div>
                 </ImageFallback>
-                <div>
+                <div className="min-w-0">
                   <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
+                    <div className="min-w-0">
                       <h3 className="text-xl font-black text-white sm:text-2xl">{experience.title}</h3>
                       <p className="mt-1 font-semibold text-cyan-200">{experience.company}</p>
                     </div>
@@ -46,25 +46,26 @@ export default function Experience() {
                       <FiCalendar /> {experience.period}
                     </span>
                   </div>
-                  <p className="mt-4 leading-7 text-slate-400">{experience.description}</p>
+                  <p className="mt-4 break-words leading-7 text-slate-400">{experience.description}</p>
                   <ul className="mt-5 grid gap-3 text-slate-300 md:grid-cols-3">
                     {experience.points.map((point) => (
-                      <li key={point} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                      <li key={point} className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 break-words">
                         {point}
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
+                  <div className="mt-6 grid gap-3 md:grid-cols-2 xl:flex xl:overflow-x-auto xl:pb-2">
                     {experience.docs.map((doc) => (
                       <button
                         key={doc.title}
                         type="button"
                         onClick={() => setActiveDoc(doc)}
-                        className="min-w-52 rounded-2xl border border-white/10 bg-slate-950/50 p-3 text-left transition hover:border-cyan-300/40 sm:min-w-56"
+                        className="grid w-full min-w-0 grid-cols-[5.75rem_minmax(0,1fr)] items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/50 p-3 text-left transition hover:border-cyan-300/40 sm:grid-cols-[7rem_minmax(0,1fr)] xl:block xl:min-w-56"
                       >
-                        <ImageFallback src={doc.image} alt={doc.title} className="h-28 w-full rounded-xl object-cover" />
-                        <span className="mt-3 flex items-center gap-2 text-sm font-semibold text-white">
-                          {doc.title} <FiExternalLink className="text-cyan-300" />
+                        <ImageFallback src={doc.image} alt={doc.title} className="h-20 w-full rounded-xl object-cover sm:h-24 xl:h-28" />
+                        <span className="flex min-w-0 items-center gap-2 break-words text-sm font-semibold leading-6 text-white xl:mt-3">
+                          <span className="min-w-0">{doc.title}</span>
+                          <FiExternalLink className="shrink-0 text-cyan-300" />
                         </span>
                       </button>
                     ))}
@@ -85,8 +86,16 @@ export default function Experience() {
             exit={{ opacity: 0 }}
             onClick={() => setActiveDoc(null)}
           >
+            <button
+              type="button"
+              onClick={() => setActiveDoc(null)}
+              className="fixed right-4 top-4 z-[70] grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-slate-950/90 text-white shadow-soft backdrop-blur transition hover:bg-white/10"
+              aria-label="Tutup dokumentasi"
+            >
+              <FiX />
+            </button>
             <motion.div
-              className="w-full max-w-3xl overflow-hidden rounded-[1.5rem] border border-white/10 bg-panel shadow-glass sm:rounded-[2rem]"
+              className="max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto overflow-x-hidden rounded-[1.5rem] border border-white/10 bg-panel shadow-glass sm:max-h-[calc(100dvh-3rem)] sm:rounded-[2rem]"
               initial={{ opacity: 0, y: 28, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 28, scale: 0.96 }}
@@ -99,14 +108,6 @@ export default function Experience() {
                     <h3 className="text-xl font-black text-white sm:text-2xl">{activeDoc.title}</h3>
                     <p className="mt-3 text-slate-400">{activeDoc.info}</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setActiveDoc(null)}
-                    className="rounded-full border border-white/10 p-3 text-slate-200 transition hover:bg-white/10"
-                    aria-label="Tutup dokumentasi"
-                  >
-                    <FiX />
-                  </button>
                 </div>
               </div>
             </motion.div>

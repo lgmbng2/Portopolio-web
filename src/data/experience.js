@@ -14,17 +14,17 @@ export const experiences = [
     docs: [
       {
         title: 'Client Review',
-        image: 'public/docs/smart1.jpeg',
+        image: '/docs/smart1.jpeg',
         info: 'Kegiatan review klien terhadap aplikasi yang sudah dibangun.',
       },
       {
         title: 'Team Review',
-        image: 'public/docs/smart2.jpeg',
+        image: '/docs/smart2.jpeg',
         info: 'Sesi review dan diskusi bersama tim untuk keperluan proyek.',
       },
        {
         title: 'Team Smart Campus Politala',
-        image: 'public/docs/smart3.jpeg',
+        image: '/docs/smart3.jpeg',
         info: 'Tim Pengembang Smart Campus Politala.',
       },
     ],

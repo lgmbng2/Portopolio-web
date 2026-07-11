@@ -147,14 +147,30 @@ export default function AiMascotAssistant() {
   };
 
   return (
-    <div className="fixed bottom-4 right-3 z-[60] flex max-w-[calc(100vw-1.5rem)] flex-col items-end gap-3 sm:bottom-7 sm:right-5 md:bottom-10 md:right-10">
+    <>
       <AnimatePresence>
         {isOpen ? (
+          <motion.button
+            type="button"
+            className="fixed inset-0 z-[55] bg-slate-950/65 backdrop-blur-md sm:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            onClick={() => setIsOpen(false)}
+            aria-label="Tutup AditBot"
+          />
+        ) : null}
+      </AnimatePresence>
+
+      <div className="fixed bottom-4 right-3 z-[60] flex max-w-[calc(100vw-1.5rem)] flex-col items-end gap-3 sm:bottom-7 sm:right-5 md:bottom-10 md:right-10">
+        <AnimatePresence>
+          {isOpen ? (
           <motion.section
-            className="w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#0b1220]/95 shadow-glass backdrop-blur-xl sm:w-[min(24rem,calc(100vw-2rem))]"
-            initial={{ opacity: 0, y: 22, scale: 0.94 }}
+            className="fixed inset-x-3 bottom-3 max-h-[calc(100dvh-1.5rem)] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#0b1220]/95 shadow-glass backdrop-blur-xl sm:static sm:w-[min(24rem,calc(100vw-2rem))]"
+            initial={{ opacity: 0, y: 34, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 18, scale: 0.96 }}
+            exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
             aria-label="AI portfolio assistant"
           >
@@ -178,7 +194,7 @@ export default function AiMascotAssistant() {
               </button>
             </div>
 
-            <div className="max-h-[min(22rem,52vh)] space-y-3 overflow-y-auto px-4 py-4 sm:max-h-[23rem]">
+            <div className="max-h-[min(24rem,48dvh)] space-y-3 overflow-y-auto px-4 py-4 sm:max-h-[23rem]">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
@@ -234,27 +250,28 @@ export default function AiMascotAssistant() {
               </form>
             </div>
           </motion.section>
-        ) : null}
-      </AnimatePresence>
+          ) : null}
+        </AnimatePresence>
 
-      <motion.button
-        type="button"
-        onClick={() => setIsOpen((current) => !current)}
-        className="group relative grid h-16 w-16 place-items-center rounded-[1.25rem] border border-cyan-300/30 bg-[#0b1220]/90 p-1 shadow-glass backdrop-blur-xl transition hover:border-cyan-200/70 sm:h-20 sm:w-20 sm:rounded-[1.5rem] md:h-24 md:w-24"
-        whileHover={{ y: -4, scale: 1.03 }}
-        whileTap={{ scale: 0.96 }}
-        aria-label={isOpen ? 'Tutup AI assistant' : 'Buka AI assistant'}
-      >
-        <span className="absolute -left-28 top-1/2 hidden -translate-y-1/2 rounded-full border border-white/10 bg-slate-950/80 px-3 py-2 text-xs font-bold text-slate-200 shadow-soft backdrop-blur transition group-hover:-translate-x-1 group-hover:text-cyan-100 md:block">
-          Tanya AditBot
-        </span>
-        <span className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-cyan-300 text-sm text-slate-950 shadow-soft sm:right-2 sm:top-2 sm:h-7 sm:w-7 sm:text-base">
-          {isOpen ? <FiX /> : <FiMessageCircle />}
-        </span>
-        <div className="h-full w-full overflow-hidden rounded-[1.25rem]">
-          <MascotCanvas active={isOpen} />
-        </div>
-      </motion.button>
-    </div>
+        <motion.button
+          type="button"
+          onClick={() => setIsOpen((current) => !current)}
+          className="group relative grid h-16 w-16 place-items-center rounded-[1.25rem] border border-cyan-300/30 bg-[#0b1220]/90 p-1 shadow-glass backdrop-blur-xl transition hover:border-cyan-200/70 sm:h-20 sm:w-20 sm:rounded-[1.5rem] md:h-24 md:w-24"
+          whileHover={{ y: -4, scale: 1.03 }}
+          whileTap={{ scale: 0.96 }}
+          aria-label={isOpen ? 'Tutup AI assistant' : 'Buka AI assistant'}
+        >
+          <span className="absolute -left-28 top-1/2 hidden -translate-y-1/2 rounded-full border border-white/10 bg-slate-950/80 px-3 py-2 text-xs font-bold text-slate-200 shadow-soft backdrop-blur transition group-hover:-translate-x-1 group-hover:text-cyan-100 md:block">
+            Tanya AditBot
+          </span>
+          <span className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-cyan-300 text-sm text-slate-950 shadow-soft sm:right-2 sm:top-2 sm:h-7 sm:w-7 sm:text-base">
+            {isOpen ? <FiX /> : <FiMessageCircle />}
+          </span>
+          <div className="h-full w-full overflow-hidden rounded-[1.25rem]">
+            <MascotCanvas active={isOpen} />
+          </div>
+        </motion.button>
+      </div>
+    </>
   );
 }

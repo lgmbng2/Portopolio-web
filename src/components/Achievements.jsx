@@ -106,7 +106,7 @@ export default function Achievements() {
             onClick={closeAchievement}
           >
             <motion.div
-              className="relative w-full max-w-6xl overflow-hidden rounded-[1.25rem] border border-white/10 bg-[#101624] shadow-glass sm:rounded-[1.5rem]"
+              className="relative max-h-[calc(100dvh-2rem)] w-full max-w-6xl overflow-y-auto overflow-x-hidden rounded-[1.25rem] border border-white/10 bg-[#101624] shadow-glass sm:max-h-[calc(100dvh-3rem)] sm:rounded-[1.5rem]"
               initial={{ opacity: 0, y: 42, scale: 0.94, filter: 'blur(8px)' }}
               animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
               exit={{ opacity: 0, y: 22, scale: 0.97, filter: 'blur(6px)' }}
@@ -116,7 +116,7 @@ export default function Achievements() {
               <button
                 type="button"
                 onClick={closeAchievement}
-                className="absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-slate-950/80 text-white backdrop-blur transition hover:bg-white/10 sm:right-4 sm:top-4 sm:h-11 sm:w-11"
+                className="fixed right-4 top-4 z-[70] grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-slate-950/90 text-white shadow-soft backdrop-blur transition hover:bg-white/10 lg:absolute lg:right-4 lg:top-4"
                 aria-label="Tutup detail sertifikat"
               >
                 <FiX />
@@ -124,7 +124,7 @@ export default function Achievements() {
 
               <div className="grid lg:grid-cols-[minmax(0,1fr)_22rem]">
                 <div className="relative bg-[#070b14]">
-                  <div className="relative flex min-h-[32rem] items-center justify-center p-3 sm:min-h-[38rem] sm:p-4 md:min-h-[36rem] md:p-5">
+                  <div className="relative flex min-h-[30rem] items-center justify-center p-3 sm:min-h-[38rem] sm:p-4 md:min-h-[36rem] md:p-5">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={galleryImages[activeImage]}
