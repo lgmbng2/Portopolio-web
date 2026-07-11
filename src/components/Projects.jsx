@@ -216,7 +216,7 @@ export default function Projects() {
             onClick={closeProject}
           >
             <motion.div
-              className="relative max-h-[calc(100dvh-2rem)] w-full max-w-6xl overflow-y-auto overflow-x-hidden rounded-[1.25rem] border border-white/10 bg-[#101624] shadow-glass sm:max-h-[calc(100dvh-3rem)] sm:rounded-[1.5rem]"
+              className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100vw-1.5rem)] overflow-y-auto overflow-x-hidden rounded-[1.25rem] border border-white/10 bg-[#101624] shadow-glass sm:max-h-[calc(100dvh-3rem)] sm:max-w-[calc(100vw-2rem)] sm:rounded-[1.5rem] lg:max-w-6xl"
               initial={{ opacity: 0, y: 56, scale: 0.9, filter: 'blur(10px)' }}
               animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
               exit={{ opacity: 0, y: 28, scale: 0.96, filter: 'blur(8px)' }}
@@ -232,53 +232,49 @@ export default function Projects() {
                 <FiX />
               </button>
 
-              <div className="grid lg:grid-cols-[minmax(0,1fr)_22rem]">
+              <div className="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_22rem]">
                 <motion.div
-                  className="relative bg-[#070b14]"
+                  className="relative min-w-0 bg-[#070b14] lg:pr-6"
                   layoutId={`project-image-${selectedProject.title}`}
                   transition={smoothSpring}
                 >
-                  <div className="relative flex min-h-[20rem] items-center justify-center p-3 sm:min-h-[26rem] sm:p-4 md:min-h-[31rem] md:p-5">
+                  <div className="relative min-w-0 p-3 sm:p-4 md:p-5">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={galleryImages[activeImage]}
-                        className="absolute inset-3 overflow-hidden rounded-2xl border border-white/10 bg-slate-950 sm:inset-4 md:inset-5"
+                        className="relative min-h-[20rem] overflow-hidden rounded-2xl border border-white/10 bg-slate-950 bg-contain bg-center bg-no-repeat sm:min-h-[26rem] md:min-h-[31rem]"
+                        style={{ backgroundImage: `url(${galleryImages[activeImage]})` }}
                         initial={{ opacity: 0, scale: 1.015, x: 18 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.985, x: -18 }}
                         transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <ImageFallback
-                          src={galleryImages[activeImage]}
-                          alt={`${selectedProject.title} ${activeImage + 1}`}
-                          className="h-full w-full bg-slate-950 object-contain"
-                        />
+                        <span className="sr-only">{`${selectedProject.title} ${activeImage + 1}`}</span>
+                        {galleryImages.length > 1 ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={showPreviousImage}
+                              className="absolute left-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/10 bg-slate-950/85 text-white shadow-soft backdrop-blur transition hover:bg-white/10 sm:h-10 sm:w-10"
+                              aria-label="Gambar sebelumnya"
+                            >
+                              <FiChevronLeft />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={showNextImage}
+                              className="absolute right-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/10 bg-slate-950/85 text-white shadow-soft backdrop-blur transition hover:bg-white/10 sm:h-10 sm:w-10"
+                              aria-label="Gambar berikutnya"
+                            >
+                              <FiChevronRight />
+                            </button>
+                          </>
+                        ) : null}
                       </motion.div>
                     </AnimatePresence>
-
-                    {galleryImages.length > 1 ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={showPreviousImage}
-                          className="absolute left-4 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/10 bg-slate-950/75 text-white shadow-soft backdrop-blur transition hover:bg-white/10 md:left-8"
-                          aria-label="Gambar sebelumnya"
-                        >
-                          <FiChevronLeft />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={showNextImage}
-                          className="absolute right-4 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/10 bg-slate-950/75 text-white shadow-soft backdrop-blur transition hover:bg-white/10 md:right-8"
-                          aria-label="Gambar berikutnya"
-                        >
-                          <FiChevronRight />
-                        </button>
-                      </>
-                    ) : null}
                   </div>
 
-                  <div className="flex gap-3 overflow-x-auto border-t border-white/10 bg-[#080d19] p-3 sm:p-4">
+                  <div className="flex max-w-full gap-3 overflow-x-auto border-t border-white/10 bg-[#080d19] p-3 sm:p-4 lg:mr-6">
                     {galleryImages.map((image, imageIndex) => (
                       <button
                         key={`${image}-${imageIndex}`}
@@ -295,7 +291,7 @@ export default function Projects() {
                   </div>
                 </motion.div>
 
-                <div className="flex flex-col bg-[#101624] p-5 pt-6 sm:p-6 md:p-8 lg:pt-20">
+                <div className="flex min-w-0 flex-col bg-[#101624] p-5 pt-6 sm:p-6 md:p-8 lg:pt-20">
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.tags.map((tag) => (
                       <span key={tag} className="rounded-full bg-cyan-300/10 px-3 py-1 text-xs font-semibold text-cyan-100">
@@ -303,8 +299,8 @@ export default function Projects() {
                       </span>
                     ))}
                   </div>
-                  <h3 className="mt-5 text-2xl font-black text-white sm:text-3xl">{selectedProject.title}</h3>
-                  <p className="mt-4 leading-8 text-slate-300">{selectedProject.description}</p>
+                  <h3 className="mt-5 break-words text-2xl font-black text-white sm:text-3xl">{selectedProject.title}</h3>
+                  <p className="mt-4 break-words leading-8 text-slate-300">{selectedProject.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2">
                     {selectedProject.skills.map((skill) => (
                       <span key={skill} className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">
