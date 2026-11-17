@@ -8,6 +8,19 @@
       content="Portfolio pribadi Muhammad Aditya, developer untuk web development, mobile development, backend development, dan sistem informasi."
     />
     <title>Muhammad Aditya | Portfolio</title>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('porto-theme');
+          if (theme !== 'dark' && theme !== 'light') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = theme;
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

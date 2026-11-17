@@ -1,11 +1,11 @@
 export const profile = {
   name: 'Muhammad Aditya',
-  role: 'Full Stack Developer',
+  role: 'Hai, Perkenalkan saya',
   domain: 'muhammadaditya.dev',
   location: 'Indonesia',
   email: 'lgmbng@gmail.com',
   summary:
-    'Developer dengan fokus pengembangan aplikasi website responsive dan mobile.',
+    'Developer dengan fokus pengembangan aplikasi website responsive.',
   socials: {
     instagram: {
       username: 'lgmbng',
@@ -17,7 +17,7 @@ export const profile = {
     },
   },
   stats: [
-    { label: 'Total Project', value: '4+' },
-    { label: 'Pengalaman', value: 'Fresh Graduate' },
+    { label: 'Proyek selesai', value: '4' },
+    { label: 'Lulus D3', value: '2026' },
   ],
 };

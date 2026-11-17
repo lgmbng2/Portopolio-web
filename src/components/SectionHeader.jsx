@@ -1,40 +1,53 @@
 import { motion } from 'framer-motion';
 
 const headerVariants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.55,
+      duration: 0.5,
       ease: 'easeOut',
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
     },
   },
 };
 
 const textVariants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
 };
 
-export default function SectionHeader({ eyebrow, title, description }) {
+export default function SectionHeader({ eyebrow, title, description, align = 'left' }) {
+  const centered = align === 'center';
+
   return (
     <motion.div
-      className="mx-auto mb-10 max-w-3xl text-center md:mb-12"
+      className={`mb-10 max-w-2xl md:mb-14 ${centered ? 'mx-auto text-center' : ''}`}
       variants={headerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.35 }}
+      viewport={{ once: true, amount: 0.35 }}
     >
-      <motion.p variants={textVariants} className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300 sm:text-sm sm:tracking-[0.28em]">
-        {eyebrow}
-      </motion.p>
-      <motion.h2 variants={textVariants} className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
+      {eyebrow ? (
+        <motion.p
+          variants={textVariants}
+          className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500"
+        >
+          {eyebrow}
+        </motion.p>
+      ) : null}
+      <motion.h2
+        variants={textVariants}
+        className="text-3xl font-bold leading-[1.15] tracking-tight text-neutral-900 sm:text-4xl md:text-[2.75rem]"
+      >
         {title}
       </motion.h2>
       {description ? (
-        <motion.p variants={textVariants} className="mt-4 text-sm leading-7 text-slate-400 sm:text-base">
+        <motion.p
+          variants={textVariants}
+          className="mt-4 max-w-[62ch] text-sm leading-7 text-neutral-500 sm:text-base"
+        >
           {description}
         </motion.p>
       ) : null}

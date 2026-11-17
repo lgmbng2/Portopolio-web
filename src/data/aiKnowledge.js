@@ -130,28 +130,28 @@ const answerSimpleChat = (text) => {
   if (hasAny(text, ['halo', 'hai', 'hello', 'hi', 'pagi', 'siang', 'sore', 'malam'])) {
     return {
       message: `Halo! Aku AditBot, asisten kecil di portfolio ${profile.name}. Mau tanya soal project, skill, pengalaman, atau sekalian hitung matematika simpel juga bisa.`,
-      action: { label: 'Lihat Portfolio', target: 'home' },
+      action: { label: 'Kembali ke atas', target: 'home' },
     };
   }
 
   if (hasAny(text, ['terima kasih', 'makasih', 'thanks', 'thank you'])) {
     return {
       message: 'Sama-sama. Senang bisa bantu. Kalau mau, tanya saja project, skill, pengalaman, atau cara kontak Aditya.',
-      action: { label: 'Buka Contact', target: 'contact' },
+      action: { label: 'Buka kontak', target: 'contact' },
     };
   }
 
   if (hasAny(text, ['bisa apa', 'fitur', 'bantu apa', 'help', 'tolong apa'])) {
     return {
       message: 'Aku bisa bantu jelaskan isi portfolio, mencarikan project yang relevan, merangkum skill/pengalaman, mengarahkan ke section halaman, menjawab obrolan simpel, dan menghitung matematika dasar seperti 12 * 8 + 5.',
-      action: { label: 'Lihat Projects', target: 'projects' },
+      action: { label: 'Lihat proyek', target: 'projects' },
     };
   }
 
   if (hasAny(text, ['kabar', 'apa kabar'])) {
     return {
       message: 'Aku baik, lagi standby nemenin pengunjung portfolio. Kamu mau lihat bagian project, pengalaman, atau skill Aditya dulu?',
-      action: { label: 'Lihat Projects', target: 'projects' },
+      action: { label: 'Lihat proyek', target: 'projects' },
     };
   }
 
@@ -178,14 +178,14 @@ export function answerPortfolioQuestion(question) {
   if (hasAny(text, ['kontak', 'contact', 'email', 'hubungi', 'instagram', 'github'])) {
     return {
       message: `${casualPrefix ? `${casualPrefix} ` : ''}Kamu bisa menghubungi ${profile.name} melalui email ${profile.email}, GitHub ${profile.socials.github.username}, atau Instagram ${profile.socials.instagram.username}.`,
-      action: { label: 'Buka Contact', target: 'contact' },
+      action: { label: 'Buka kontak', target: 'contact' },
     };
   }
 
   if (hasAny(text, ['profil', 'profile', 'tentang', 'siapa', 'aditya'])) {
     return {
-      message: `${casualPrefix ? `${casualPrefix} ` : ''}${profile.name} adalah ${profile.role} dari ${profile.location}. Fokus utamanya adalah pengembangan aplikasi website responsive dan mobile. Saat ini portfolio ini menampilkan ${profile.stats[0].value} project dan status pengalaman sebagai ${profile.stats[1].value}.`,
-      action: { label: 'Lihat About', target: 'about' },
+      message: `${casualPrefix ? `${casualPrefix} ` : ''}${profile.name} adalah ${profile.role} dari ${profile.location}. Fokus utamanya adalah pengembangan aplikasi website responsive dan mobile. Saat ini portfolio ini menampilkan ${profile.stats[0].value} proyek dan lulus ${profile.stats[1].label.toLowerCase()}.`,
+      action: { label: 'Lihat tentang', target: 'about' },
     };
   }
 
@@ -197,27 +197,27 @@ export function answerPortfolioQuestion(question) {
     if (hasAny(text, ['backend', 'api', 'server'])) {
       return {
         message: `${casualPrefix ? `${casualPrefix} ` : ''}Untuk backend, Aditya punya pengalaman dengan ${formatList(backendSkills)} serta integrasi API seperti WhatsApp API dan Google Calendar API pada beberapa project.`,
-        action: { label: 'Lihat Skills', target: 'skills' },
+        action: { label: 'Lihat keahlian', target: 'skills' },
       };
     }
 
     if (hasAny(text, ['frontend', 'ui', 'react', 'tailwind'])) {
       return {
         message: `${casualPrefix ? `${casualPrefix} ` : ''}Untuk frontend, skill yang paling relevan adalah ${formatList(frontendSkills)}. Beberapa project di portfolio ini juga memakai React untuk membangun antarmuka interaktif.`,
-        action: { label: 'Lihat Projects', target: 'projects' },
+        action: { label: 'Lihat proyek', target: 'projects' },
       };
     }
 
     if (hasAny(text, ['mobile', 'android', 'kotlin'])) {
       return {
         message: `${casualPrefix ? `${casualPrefix} ` : ''}Untuk mobile, Aditya memiliki pengalaman dengan ${formatList(mobileSkills)}, terutama pada project Prototype dan Monitoring Sistem IOT berbasis aplikasi Android.`,
-        action: { label: 'Lihat Projects', target: 'projects' },
+        action: { label: 'Lihat proyek', target: 'projects' },
       };
     }
 
     return {
       message: `${casualPrefix ? `${casualPrefix} ` : ''}Skill utama Aditya meliputi ${formatList(skillNames.slice(0, 9))}, dan beberapa teknologi lain seperti ${formatList(skillNames.slice(9, 18))}.`,
-      action: { label: 'Lihat Skills', target: 'skills' },
+      action: { label: 'Lihat keahlian', target: 'skills' },
     };
   }
 
@@ -227,14 +227,14 @@ export function answerPortfolioQuestion(question) {
     if (matchedProject) {
       return {
         message: `${casualPrefix ? `${casualPrefix} ` : ''}${matchedProject.title} adalah ${matchedProject.description} Teknologi yang digunakan: ${formatList(matchedProject.skills)}.`,
-        action: { label: 'Lihat Projects', target: 'projects' },
+        action: { label: 'Lihat proyek', target: 'projects' },
       };
     }
 
     const projectSummary = projects.map((project) => project.title).join(', ');
     return {
       message: `${casualPrefix ? `${casualPrefix} ` : ''}Project yang ditampilkan adalah ${projectSummary}. Yang paling menonjol untuk sistem web adalah Smart Persuratan dan Smart Psikologi karena melibatkan RBAC, React, Go, serta integrasi layanan eksternal.`,
-      action: { label: 'Lihat Projects', target: 'projects' },
+      action: { label: 'Lihat proyek', target: 'projects' },
     };
   }
 
@@ -242,26 +242,26 @@ export function answerPortfolioQuestion(question) {
     const mainExperience = experiences[0];
     return {
       message: `${casualPrefix ? `${casualPrefix} ` : ''}Pengalaman utama Aditya adalah ${mainExperience.title} di ${mainExperience.company} pada periode ${mainExperience.period}. Fokusnya membangun Smart Persuratan, Smart Psikologi, base architecture system, RBAC, serta integrasi WhatsApp dan Google Calendar.`,
-      action: { label: 'Lihat Experience', target: 'experience' },
+      action: { label: 'Lihat tentang', target: 'about' },
     };
   }
 
   if (hasAny(text, ['pendidikan', 'education', 'kuliah', 'sekolah', 'kampus'])) {
     return {
       message: `${casualPrefix ? `${casualPrefix} ` : ''}Pendidikan Aditya: ${education.map((item) => `${item.school} (${item.grade}, ${item.year})`).join(' dan ')}.`,
-      action: { label: 'Lihat Education', target: 'education' },
+      action: { label: 'Lihat tentang', target: 'about' },
     };
   }
 
   if (hasAny(text, ['sertifikat', 'achievement', 'prestasi', 'pencapaian'])) {
     return {
       message: `${casualPrefix ? `${casualPrefix} ` : ''}Pencapaian yang ditampilkan meliputi ${achievements.map((item) => item.name).join(' dan ')}.`,
-      action: { label: 'Lihat Achievements', target: 'achievements' },
+      action: { label: 'Lihat sertifikat', target: 'achievements' },
     };
   }
 
   return {
     message: 'Aku bisa jawab obrolan ringan dan hitung matematika dasar, tapi tetap paling kuat untuk konteks portfolio Aditya. Coba tanya: "Project React apa saja?", "Hitung 12 * 8 + 5", atau "Skill backend Aditya apa?"',
-    action: { label: 'Lihat Portfolio', target: 'home' },
+    action: { label: 'Kembali ke atas', target: 'home' },
   };
 }

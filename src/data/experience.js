@@ -5,7 +5,7 @@ export const experiences = [
     logo: '/logos/logo-politeknik.png',
     period: '2025 - 2026',
     description:
-      'Mengembangkan Smart Campus Politala pada Modul Layanan Umum. Bertanggung jawab dalam membangun modul Smart Persuratan dan modul Smart Psikologi. Membantu membangun arsitektur sistem Smart Campus dengan menerapkan metode Role-Based Access Controll (RBAC) dengan integrasi sistem WhatsApp dan Google Calendar.',
+      'Mengembangkan Smart Campus Politala pada Modul Layanan Umum. Bertanggung jawab dalam membangun modul Smart Persuratan dan modul Smart Psikologi. Membantu membangun arsitektur sistem Smart Campus dengan menerapkan metode Role-Based Access Control (RBAC) dengan integrasi sistem WhatsApp dan Google Calendar.',
     points: [
       'Membangun Modul Smart Psikologi.',
       'Membangun Modul Smart Persuratan.',
@@ -33,7 +33,7 @@ export const experiences = [
     title: 'Teaching Factory TI Politala Developer',
     company: 'Politeknik Negeri Tanah Laut',
     logo: '/logos/logo-politeknik.png',
-    period: '2024-2025',
+    period: '2024 - 2025',
     description:
       'Mengerjakan website sistem manajemen produksi "go chicken go". Membangun sistem dengan bekerja sama dengan tim dan bertanggung jawab sebagai full stack developer pada fitur tertentu.',
     points: [
@@ -72,12 +72,12 @@ export const experiences = [
         info: 'Penyerahan Sertifikat sebagai Pimpinan Umum LPM DIGMA.',
       },
        {
-        title: 'Dokumentasi',
+        title: 'Musyawarah Besar LPM DIGMA',
         image: '/docs/lpm2.jpeg',
-        info: 'Dokumentasi kegiatan LPM DIGMA.',
+        info: 'Dokumentasi kegiatan Mubes LPM DIGMA.',
       },
        {
-        title: 'Dokumentasi',
+        title: 'Kegiatan LPM DIGMA',
         image: '/docs/lpm3.jpeg',
         info: 'Dokumentasi kegiatan LPM DIGMA.',
       },

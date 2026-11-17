@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { FiArrowRight, FiMessageCircle, FiMinus, FiSend, FiX } from 'react-icons/fi';
 import { aiKnowledge, answerPortfolioQuestion } from '../data/aiKnowledge';
 
@@ -11,11 +11,22 @@ function MascotModel({ active = false }) {
   const groupRef = useRef(null);
   const leftArmRef = useRef(null);
   const rightArmRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
   useFrame(({ clock }) => {
-    const elapsed = clock.getElapsedTime();
     if (!groupRef.current) return;
 
+    if (reduceMotion) {
+      groupRef.current.position.y = 0;
+      groupRef.current.rotation.y = 0;
+      if (leftArmRef.current && rightArmRef.current) {
+        leftArmRef.current.rotation.z = 0.35;
+        rightArmRef.current.rotation.z = -0.35;
+      }
+      return;
+    }
+
+    const elapsed = clock.getElapsedTime();
     groupRef.current.position.y = Math.sin(elapsed * 1.6) * 0.08;
     groupRef.current.rotation.y = Math.sin(elapsed * 0.9) * 0.18;
 
@@ -29,63 +40,63 @@ function MascotModel({ active = false }) {
     <group ref={groupRef} scale={active ? 0.88 : 0.82}>
       <mesh position={[0, -0.28, 0]}>
         <sphereGeometry args={[0.74, 48, 48]} />
-        <meshStandardMaterial color="#1dd4e8" roughness={0.42} metalness={0.28} />
+        <meshStandardMaterial color="#8f8f8f" roughness={0.42} metalness={0.28} />
       </mesh>
 
       <mesh position={[0, 0.58, 0]}>
         <sphereGeometry args={[0.54, 48, 48]} />
-        <meshStandardMaterial color="#f8fbff" roughness={0.34} metalness={0.08} />
+        <meshStandardMaterial color="#c4c4c4" roughness={0.34} metalness={0.08} />
       </mesh>
 
       <mesh position={[0, 0.58, 0.49]}>
         <sphereGeometry args={[0.39, 48, 48]} />
-        <meshStandardMaterial color="#08111f" roughness={0.22} metalness={0.18} />
+        <meshStandardMaterial color="#262626" roughness={0.22} metalness={0.18} />
       </mesh>
 
       <mesh position={[-0.15, 0.66, 0.82]}>
         <sphereGeometry args={[0.055, 24, 24]} />
-        <meshStandardMaterial color="#67e8f9" emissive="#0ea5e9" emissiveIntensity={active ? 1.5 : 0.8} />
+        <meshStandardMaterial color="#6b6b6b" emissive="#1a1a1a" emissiveIntensity={active ? 1.5 : 0.8} />
       </mesh>
       <mesh position={[0.15, 0.66, 0.82]}>
         <sphereGeometry args={[0.055, 24, 24]} />
-        <meshStandardMaterial color="#67e8f9" emissive="#0ea5e9" emissiveIntensity={active ? 1.5 : 0.8} />
+        <meshStandardMaterial color="#6b6b6b" emissive="#1a1a1a" emissiveIntensity={active ? 1.5 : 0.8} />
       </mesh>
 
       <mesh position={[0, 0.47, 0.82]} rotation={[0, 0, 0]}>
         <boxGeometry args={[0.2, 0.035, 0.035]} />
-        <meshStandardMaterial color="#67e8f9" emissive="#0ea5e9" emissiveIntensity={0.65} />
+        <meshStandardMaterial color="#6b6b6b" emissive="#1a1a1a" emissiveIntensity={0.65} />
       </mesh>
 
       <group ref={leftArmRef} position={[-0.66, -0.18, 0.02]}>
         <mesh rotation={[0, 0, -0.2]}>
           <capsuleGeometry args={[0.09, 0.58, 8, 18]} />
-          <meshStandardMaterial color="#e8fbff" roughness={0.38} />
+          <meshStandardMaterial color="#a8a8a8" roughness={0.38} />
         </mesh>
       </group>
 
       <group ref={rightArmRef} position={[0.66, -0.18, 0.02]}>
         <mesh rotation={[0, 0, 0.2]}>
           <capsuleGeometry args={[0.09, 0.58, 8, 18]} />
-          <meshStandardMaterial color="#e8fbff" roughness={0.38} />
+          <meshStandardMaterial color="#a8a8a8" roughness={0.38} />
         </mesh>
       </group>
 
       <mesh position={[-0.24, -0.98, 0.1]}>
         <capsuleGeometry args={[0.1, 0.34, 8, 18]} />
-        <meshStandardMaterial color="#f8fbff" roughness={0.4} />
+        <meshStandardMaterial color="#c4c4c4" roughness={0.4} />
       </mesh>
       <mesh position={[0.24, -0.98, 0.1]}>
         <capsuleGeometry args={[0.1, 0.34, 8, 18]} />
-        <meshStandardMaterial color="#f8fbff" roughness={0.4} />
+        <meshStandardMaterial color="#c4c4c4" roughness={0.4} />
       </mesh>
 
       <mesh position={[0, 1.12, 0]} rotation={[0.12, 0, 0]}>
         <capsuleGeometry args={[0.035, 0.36, 8, 16]} />
-        <meshStandardMaterial color="#67e8f9" emissive="#0891b2" emissiveIntensity={0.9} />
+        <meshStandardMaterial color="#6b6b6b" emissive="#1a1a1a" emissiveIntensity={0.9} />
       </mesh>
       <mesh position={[0, 1.34, 0.04]}>
         <sphereGeometry args={[0.1, 24, 24]} />
-        <meshStandardMaterial color="#facc15" emissive="#f59e0b" emissiveIntensity={active ? 1.2 : 0.6} />
+        <meshStandardMaterial color="#ffffff" emissive="#9a9a9a" emissiveIntensity={active ? 1.2 : 0.6} />
       </mesh>
     </group>
   );
@@ -96,7 +107,7 @@ function MascotCanvas({ active }) {
     <Canvas camera={{ position: [0, 0.08, 5.25], fov: 34 }} dpr={[1, 1.6]}>
       <ambientLight intensity={0.75} />
       <directionalLight position={[2.5, 3.5, 4]} intensity={1.9} />
-      <pointLight position={[-2, 1, 2]} color="#22d3ee" intensity={1.6} />
+      <pointLight position={[-2, 1, 2]} color="#ffffff" intensity={1.6} />
       <Suspense fallback={null}>
         <MascotModel active={active} />
       </Suspense>
@@ -125,8 +136,7 @@ export default function AiMascotAssistant() {
   const quickPrompts = useMemo(() => aiKnowledge.quickPrompts, []);
 
   const scrollToSection = (target) => {
-    const element = document.getElementById(target);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.location.hash = target;
   };
 
   const askQuestion = (question) => {
@@ -152,7 +162,7 @@ export default function AiMascotAssistant() {
         {isOpen ? (
           <motion.button
             type="button"
-            className="fixed inset-0 z-[55] bg-slate-950/65 backdrop-blur-md sm:hidden"
+            className="fixed inset-0 z-[55] bg-neutral-100 backdrop-blur-md sm:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -167,27 +177,27 @@ export default function AiMascotAssistant() {
         <AnimatePresence>
           {isOpen ? (
           <motion.section
-            className="fixed inset-x-3 bottom-3 max-h-[calc(100dvh-1.5rem)] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#0b1220]/95 shadow-glass backdrop-blur-xl sm:static sm:w-[min(24rem,calc(100vw-2rem))]"
+            className="fixed inset-x-3 bottom-3 max-h-[calc(100dvh-1.5rem)] overflow-hidden rounded-2xl border border-neutral-300 bg-panel/95 backdrop-blur-xl sm:static sm:w-[min(24rem,calc(100vw-2rem))]"
             initial={{ opacity: 0, y: 34, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
             aria-label="AI portfolio assistant"
           >
-            <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.04] px-4 py-3">
+            <div className="flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-3">
               <div className="flex items-center gap-3">
-                <div className="h-11 w-11 overflow-hidden rounded-2xl border border-cyan-300/20 bg-cyan-300/10">
-                  <MascotCanvas active={isOpen} />
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-neutral-200 bg-white text-sm font-black text-neutral-500">
+                  AB
                 </div>
                 <div>
-                  <p className="text-sm font-black text-white">Adit AI</p>
-                  <p className="text-xs text-slate-400">Portfolio guide</p>
+                  <p className="text-sm font-black text-neutral-900">Adit AI</p>
+                  <p className="text-xs text-neutral-500">Portfolio guide</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:bg-white/10"
+                className="grid h-9 w-9 place-items-center rounded-full border border-neutral-200 text-neutral-700 transition hover:bg-neutral-200"
                 aria-label="Minimize assistant"
               >
                 <FiMinus />
@@ -200,8 +210,8 @@ export default function AiMascotAssistant() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-6 ${
                       message.role === 'user'
-                        ? 'bg-cyan-300 text-slate-950'
-                        : 'border border-white/10 bg-slate-950/60 text-slate-200'
+                        ? 'bg-neutral-900 text-white'
+                        : 'border border-neutral-200 bg-neutral-100 text-neutral-700'
                     }`}
                   >
                     <p>{message.message}</p>
@@ -209,7 +219,7 @@ export default function AiMascotAssistant() {
                       <button
                         type="button"
                         onClick={() => scrollToSection(message.action.target)}
-                        className="mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 px-3 py-1.5 text-xs font-bold text-cyan-100 transition hover:bg-cyan-300/10"
+                        className="mt-3 inline-flex items-center gap-2 rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-bold text-neutral-700 transition hover:bg-neutral-100/10"
                       >
                         {message.action.label}
                         <FiArrowRight />
@@ -220,29 +230,29 @@ export default function AiMascotAssistant() {
               ))}
             </div>
 
-            <div className="border-t border-white/10 p-4">
+            <div className="border-t border-neutral-200 p-4">
               <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
                 {quickPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
                     onClick={() => askQuestion(prompt)}
-                    className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-semibold text-slate-200 transition hover:border-cyan-300/35 hover:bg-cyan-300/10"
+                    className="shrink-0 rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs font-semibold text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-100/10"
                   >
                     {prompt}
                   </button>
                 ))}
               </div>
-              <form onSubmit={handleSubmit} className="flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/70 p-2">
+              <form onSubmit={handleSubmit} className="flex items-center gap-2 rounded-2xl border border-neutral-200 bg-neutral-100 p-2">
                 <input
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Tanya seputar portfolio..."
-                  className="min-w-0 flex-1 bg-transparent px-2 text-sm text-white outline-none placeholder:text-slate-500"
+                  className="min-w-0 flex-1 bg-transparent px-2 text-sm text-neutral-900 outline-none placeholder:text-neutral-500"
                 />
                 <button
                   type="submit"
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan-300 text-slate-950 transition hover:bg-cyan-200"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-neutral-900 text-white transition hover:bg-neutral-800"
                   aria-label="Kirim pertanyaan"
                 >
                   <FiSend />
@@ -256,18 +266,18 @@ export default function AiMascotAssistant() {
         <motion.button
           type="button"
           onClick={() => setIsOpen((current) => !current)}
-          className="group relative grid h-16 w-16 place-items-center rounded-[1.25rem] border border-cyan-300/30 bg-[#0b1220]/90 p-1 shadow-glass backdrop-blur-xl transition hover:border-cyan-200/70 sm:h-20 sm:w-20 sm:rounded-[1.5rem] md:h-24 md:w-24"
+          className="group relative grid h-16 w-16 place-items-center rounded-2xl border border-neutral-300 bg-panel/90 p-1 backdrop-blur-xl transition hover:border-neutral-400 sm:h-20 sm:w-20 md:h-24 md:w-24"
           whileHover={{ y: -4, scale: 1.03 }}
           whileTap={{ scale: 0.96 }}
           aria-label={isOpen ? 'Tutup AI assistant' : 'Buka AI assistant'}
         >
-          <span className="absolute -left-28 top-1/2 hidden -translate-y-1/2 rounded-full border border-white/10 bg-slate-950/80 px-3 py-2 text-xs font-bold text-slate-200 shadow-soft backdrop-blur transition group-hover:-translate-x-1 group-hover:text-cyan-100 md:block">
+          <span className="absolute -left-28 top-1/2 hidden -translate-y-1/2 rounded-full border border-neutral-200 bg-neutral-100 px-3 py-2 text-xs font-bold text-neutral-700 shadow-soft backdrop-blur transition group-hover:-translate-x-1 group-hover:text-neutral-700 md:block">
             Tanya AditBot
           </span>
-          <span className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-cyan-300 text-sm text-slate-950 shadow-soft sm:right-2 sm:top-2 sm:h-7 sm:w-7 sm:text-base">
+          <span className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-neutral-900 text-sm text-white shadow-soft sm:right-2 sm:top-2 sm:h-7 sm:w-7 sm:text-base">
             {isOpen ? <FiX /> : <FiMessageCircle />}
           </span>
-          <div className="h-full w-full overflow-hidden rounded-[1.25rem]">
+          <div className="h-full w-full overflow-hidden rounded-2xl">
             <MascotCanvas active={isOpen} />
           </div>
         </motion.button>

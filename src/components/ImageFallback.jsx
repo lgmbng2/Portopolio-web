@@ -6,9 +6,9 @@ export default function ImageFallback({ src, alt, className = '', children, styl
 
   if (!src || failed) {
     return (
-      <div className={`flex items-center justify-center bg-slate-900/80 ${className}`} style={style}>
+      <div className={`flex items-center justify-center bg-neutral-100/80 ${className}`} style={style}>
         {children ?? (
-          <div className="grid place-items-center gap-3 text-center text-slate-500">
+          <div className="grid place-items-center gap-3 text-center text-neutral-500">
             <FiImage className="mx-auto text-3xl" />
             <span className="text-xs">Tambahkan gambar</span>
           </div>

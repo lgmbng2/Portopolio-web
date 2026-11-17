@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { ContactShadows, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
+import { useThemeMode } from '../theme';
 
 function FixedCamera() {
   const { camera } = useThree();
@@ -16,6 +17,14 @@ function FixedCamera() {
   return null;
 }
 
+const readVar = (name, fallback) => {
+  const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const channels = value.split(/\s+/).map(Number);
+  return channels.length === 3 && channels.every(Number.isFinite)
+    ? `rgb(${channels.join(', ')})`
+    : fallback;
+};
+
 function createLogoTexture(skill) {
   const canvas = document.createElement('canvas');
   const size = 256;
@@ -24,7 +33,7 @@ function createLogoTexture(skill) {
   const context = canvas.getContext('2d');
   context.clearRect(0, 0, size, size);
   context.fillStyle = '#ffffff';
-  context.shadowColor = 'rgba(0, 0, 0, 0.42)';
+  context.shadowColor = 'rgba(0, 0, 0, 0.35)';
   context.shadowBlur = 4;
   context.shadowOffsetY = 2;
   context.textAlign = 'center';
@@ -38,7 +47,7 @@ function createLogoTexture(skill) {
     context.fill(path);
     context.restore();
   } else {
-    context.font = '900 78px Inter, Arial, sans-serif';
+    context.font = '900 78px "Geist Variable", Arial, sans-serif';
     context.fillText(skill.shortName, size / 2, size / 2);
   }
 
@@ -55,8 +64,7 @@ function SkillKey3D({ skill, position, rowOffset, index, total, visible, onActiv
   const logoMaterialRef = useRef();
   const [shown, setShown] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const accent = useMemo(() => new THREE.Color(skill.color), [skill.color]);
-  const keyColor = useMemo(() => accent.clone().lerp(new THREE.Color('#050914'), 0.04), [accent]);
+  const keyColor = useMemo(() => new THREE.Color(skill.color), [skill.color]);
   const logoTexture = useMemo(() => createLogoTexture(skill), [skill]);
   const showDelay = index * 55;
   const hideDelay = (total - index - 1) * 38;
@@ -107,10 +115,10 @@ function SkillKey3D({ skill, position, rowOffset, index, total, visible, onActiv
         <meshPhysicalMaterial
           ref={materialRef}
           color={keyColor}
-          roughness={0.68}
+          roughness={0.62}
           metalness={0}
-          clearcoat={0.08}
-          clearcoatRoughness={0.82}
+          clearcoat={0.05}
+          clearcoatRoughness={0.85}
           transparent
           opacity={0}
         />
@@ -126,7 +134,7 @@ function SkillKey3D({ skill, position, rowOffset, index, total, visible, onActiv
   );
 }
 
-function KeyboardScene({ skills, visible, onActivate }) {
+function KeyboardScene({ skills, visible, onActivate, canvasColor, groundColor }) {
   const layout = [];
   const rowSizes = [6, 6, 6];
   const rowOffsets = [0, 0.42, 0.84];
@@ -146,13 +154,12 @@ function KeyboardScene({ skills, visible, onActivate }) {
   return (
     <>
       <FixedCamera />
-      <color attach="background" args={['#080B12']} />
-      <ambientLight intensity={0.28} />
-      <hemisphereLight args={['#c2d2e5', '#060913', 0.58]} />
-      <directionalLight position={[3.8, 7.4, 5.6]} intensity={1.32} castShadow shadow-mapSize={[2048, 2048]} />
-      <spotLight position={[-4.8, 5.6, 3.4]} angle={0.42} penumbra={0.9} intensity={0.54} color="#c2d2e5" />
-      <pointLight position={[4.2, 2.9, -3.5]} intensity={0.26} color="#c58a58" />
-      <pointLight position={[-3.6, 1.4, 4.2]} intensity={0.18} color="#6ea8ff" />
+      <color attach="background" args={[canvasColor]} />
+      <ambientLight intensity={1.05} />
+      <hemisphereLight args={['#ffffff', groundColor, 0.9]} />
+      <directionalLight position={[3.8, 7.4, 5.6]} intensity={1.5} castShadow shadow-mapSize={[2048, 2048]} />
+      <spotLight position={[-4.8, 5.6, 3.4]} angle={0.42} penumbra={0.9} intensity={0.45} color="#ffffff" />
+      <pointLight position={[4.2, 2.9, -3.5]} intensity={0.16} color="#ffffff" />
       <group rotation={[0, -0.12, -0.08]} position={[0, -0.72, 0]} scale={0.98}>
         {layout.map(({ skill, position, rowOffset }) => (
           <SkillKey3D
@@ -167,16 +174,26 @@ function KeyboardScene({ skills, visible, onActivate }) {
           />
         ))}
       </group>
-      <ContactShadows position={[0, -0.82, 0]} opacity={0.54} scale={8.8} blur={2.45} far={4.6} />
+      <ContactShadows position={[0, -0.82, 0]} opacity={0.22} scale={8.8} blur={2.45} far={4.6} color="#171717" />
     </>
   );
 }
 
 export default function SkillKeyboardScene({ skills, visible, onActivate }) {
+  useThemeMode();
+  const canvasColor = readVar('--canvas', 'rgb(255, 255, 255)');
+  const groundColor = readVar('--n300', 'rgb(212, 212, 212)');
+
   return (
-    <div className="h-[360px] overflow-hidden bg-[#080B12] sm:h-[500px] md:h-[640px]">
+    <div className="h-[360px] overflow-hidden bg-canvas sm:h-[500px] md:h-[640px]">
       <Canvas shadows camera={{ position: [4.05, 5.35, 6.65], fov: 44 }} dpr={[1, 1.75]}>
-        <KeyboardScene skills={skills} visible={visible} onActivate={onActivate} />
+        <KeyboardScene
+          skills={skills}
+          visible={visible}
+          onActivate={onActivate}
+          canvasColor={canvasColor}
+          groundColor={groundColor}
+        />
       </Canvas>
     </div>
   );

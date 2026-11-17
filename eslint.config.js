@@ -12,6 +12,10 @@ export default [
       globals: {
         document: 'readonly',
         window: 'readonly',
+        localStorage: 'readonly',
+        getComputedStyle: 'readonly',
+        fetch: 'readonly',
+        AbortController: 'readonly',
       },
       parserOptions: {
         ecmaVersion: 'latest',
